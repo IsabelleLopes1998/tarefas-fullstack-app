@@ -16,7 +16,7 @@ public class TarefaMapper {
                 .descricao(dto.getDescricao())
                 .prazo(dto.getPrazo())
                 .dataCriacao(LocalDateTime.now())
-                .concluida(false)
+                .concluida(dto.getConcluida() != null ? dto.getConcluida() : false)
                 .build();
     }
 

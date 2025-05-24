@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tarefas")
+@RequestMapping("tarefas")
 public class TarefaController {
 
     private final TarefaService tarefaService;
@@ -19,30 +19,33 @@ public class TarefaController {
         this.tarefaService = tarefaService;
     }
 
-    @GetMapping
+    @GetMapping("/listaDeTarefas")
     public ResponseEntity<List<TarefaResponseDTO>> listarTodas() {
         return ResponseEntity.ok(tarefaService.listarTarefas());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscarPorId/{id}")
     public ResponseEntity<TarefaResponseDTO> buscarPorId(@PathVariable Long id) {
-        TarefaResponseDTO dto = tarefaService.buscarPorId(id);
-        return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
+        TarefaResponseDTO tarefa = tarefaService.buscarPorId(id);
+        return tarefa != null
+                ? ResponseEntity.ok(tarefa)
+                : ResponseEntity.notFound().build();
     }
 
-    @PostMapping
+
+    @PostMapping("/salvarTarefa")
     public ResponseEntity<TarefaResponseDTO> criar(@Valid @RequestBody TarefaRequestDTO dto) {
         TarefaResponseDTO resposta = tarefaService.criarTarefa(dto);
         return ResponseEntity.ok(resposta);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizarTarefa/{id}")
     public ResponseEntity<TarefaResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody TarefaRequestDTO dto) {
         TarefaResponseDTO resposta = tarefaService.atualizarTarefa(id, dto);
         return resposta != null ? ResponseEntity.ok(resposta) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/excluirTarefa/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         tarefaService.excluirTarefa(id);
         return ResponseEntity.noContent().build();

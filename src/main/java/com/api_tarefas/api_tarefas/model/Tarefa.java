@@ -33,6 +33,7 @@ public class Tarefa {
     @Size(max = 1000, message = "A descrição deve ter no máximo 1000 caracteres")
     private String descricao;
 
+    @Getter
     @Column(nullable = false)
     private boolean concluida;
 
@@ -41,4 +42,6 @@ public class Tarefa {
 
     @FutureOrPresent(message = "O prazo deve ser uma data futura ou presente")
     private LocalDate prazo;
+
+
 }

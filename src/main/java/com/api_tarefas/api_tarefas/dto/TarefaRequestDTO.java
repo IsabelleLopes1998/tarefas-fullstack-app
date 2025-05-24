@@ -23,4 +23,6 @@ public class TarefaRequestDTO {
 
     @FutureOrPresent(message = "O prazo deve ser uma data futura ou presente")
     private LocalDate prazo;
+
+    private Boolean concluida;
 }

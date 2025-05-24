@@ -35,7 +35,16 @@ public class TarefaService {
 
     public TarefaResponseDTO criarTarefa(TarefaRequestDTO dto) {
         Tarefa novaTarefa = tarefaMapper.toEntity(dto);
+
+        if (dto.getConcluida() == null) {
+            novaTarefa.setConcluida(false);
+        } else {
+            novaTarefa.setConcluida(dto.getConcluida());
+        }
+
         novaTarefa = tarefaRepository.save(novaTarefa);
+
+
         return tarefaMapper.toResponseDTO(novaTarefa);
     }
 
@@ -46,6 +55,11 @@ public class TarefaService {
             tarefa.setTitulo(dto.getTitulo());
             tarefa.setDescricao(dto.getDescricao());
             tarefa.setPrazo(dto.getPrazo());
+
+            if (dto.getConcluida() != null) {
+                tarefa.setConcluida(dto.getConcluida());
+            }
+
             Tarefa atualizada = tarefaRepository.save(tarefa);
             return tarefaMapper.toResponseDTO(atualizada);
         }
